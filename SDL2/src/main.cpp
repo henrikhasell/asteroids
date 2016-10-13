@@ -11,6 +11,7 @@
 
 #include "utilities/shader.hpp"
 #include "utilities/program.hpp"
+#include "model.hpp"
 
 #define PROJECT_NAME "Asteroids"
 #define SCREEN_WIDTH 800
@@ -122,26 +123,16 @@ int main(int argc, char* argv[])
                     { 0.00f,  0.25f }
                 };
 
-                GLuint vertexbuffer;
-                glGenBuffers(1, &vertexbuffer);
-                glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
-                GLuint vertexBuffers[5];
-                glGenBuffers(5, vertexBuffers);
+                Model modelArray[] = {
+                    {asteroid_1_vertices, 10},
+                    {asteroid_2_vertices, 12},
+                    {asteroid_3_vertices, 12},
+                    {asteroid_4_vertices, 12},
+                    {space_ship_vertices, 4}
+                };
 
-                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[0]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_1_vertices), asteroid_1_vertices, GL_STATIC_DRAW);
-                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[1]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_2_vertices), asteroid_2_vertices, GL_STATIC_DRAW);
-                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[2]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_3_vertices), asteroid_3_vertices, GL_STATIC_DRAW);
-                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[3]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_4_vertices), asteroid_4_vertices, GL_STATIC_DRAW);
-                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[4]);
-                glBufferData(GL_ARRAY_BUFFER, sizeof(space_ship_vertices), space_ship_vertices, GL_STATIC_DRAW);
-
-                glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+                glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 
                 bool finished = false;
 
@@ -165,11 +156,7 @@ int main(int argc, char* argv[])
 
                     // Render scene:
                     glClear(GL_COLOR_BUFFER_BIT);
-                    glEnableVertexAttribArray(0);
-                    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[1]);
-                    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-                    glDrawArrays(GL_LINE_LOOP, 0, 12);
-                    glDisableVertexAttribArray(0);
+                    modelArray[4].draw();
 
                     // Display the scene:
                     SDL_GL_SwapWindow(window);
