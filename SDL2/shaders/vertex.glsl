@@ -1,8 +1,12 @@
-#version 130
+#version 150
 
 in vec2 position;
 
+uniform mat4 projectionMatrix;
+uniform mat4 modelMatrix;
+uniform mat4 viewMatrix;
+
 void main()
 {
-    gl_Position = vec4(position, 0.0, 1.0);
+    gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 0.0, 1.0);
 }
