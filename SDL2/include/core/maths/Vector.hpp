@@ -7,11 +7,9 @@ namespace Core
 {
     namespace Maths
     {
-        class Vector
+        struct Vector
         {
-        public:
             Vector(float x, float y);
-            Vector(const Vector &other);
             // Data access operator:
             float &operator[](std::size_t index);
             // Arithmetic operators with vectors:
@@ -30,15 +28,16 @@ namespace Core
             void operator*=(const Vector &other);
             void operator/=(const Vector &other);
             // Arithmetic operators with scalars:
-            Vector &operator+=(const float other);
-            Vector &operator-=(const float other);
-            Vector &operator*=(const float other);
-            Vector &operator/=(const float other);
+            void operator+=(const float other);
+            void operator-=(const float other);
+            void operator*=(const float other);
+            void operator/=(const float other);
             // Mathematical operations for vectors:
+            Vector normalise();
             float magnitude();
-            float normalise();
-        private:
-            float data[2];
+            // Variables:
+            float x;
+            float y;
         };
     }
 }
