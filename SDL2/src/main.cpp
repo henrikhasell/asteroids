@@ -4,6 +4,8 @@
 #include <vector>
 
 #include <GL/glew.h>
+#include <glm/glm.hpp>
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
@@ -77,16 +79,67 @@ int main(int argc, char* argv[])
 
                 glUseProgram(program);
 
-                const GLfloat vertices[] = {
-                     0.0f,  0.5f,
-                     0.5f, -0.5f,
-                    -0.5f, -0.5f
+                const glm::vec2 vertices[3] = {
+                    {+0.0f, +0.5f},
+                    {+0.5f, -0.5f},
+                    {-0.5f, -0.5f}
+                };
+
+
+                const glm::vec2 asteroid_1_vertices[10] = {
+                    { -0.258829f, -0.466654f }, { -0.026869f, -0.217373f },
+                    {  0.229284f, -0.486908f }, {  0.473549f, -0.231049f },
+                    {  0.343808f,  0.036211f }, {  0.468176f,  0.270399f },
+                    {  0.116252f,  0.513091f }, { -0.292469f,  0.513091f },
+                    { -0.526451f,  0.272889f }, { -0.526451f, -0.203697f }
+                };
+
+                const glm::vec2 asteroid_2_vertices[12] = {
+                    {  0.093883f, -0.003426f }, {  0.463877f, -0.152118f }, {  0.473194f, -0.265410f },
+                    {  0.112516f, -0.512724f }, { -0.262802f, -0.512724f }, { -0.174962f, -0.260859f },
+                    { -0.499283f, -0.260859f }, { -0.499283f,  0.130093f }, { -0.255886f,  0.479549f },
+                    {  0.126392f,  0.356185f }, {  0.241383f,  0.487276f }, {  0.500717f,  0.231932f }
+                };
+
+                const glm::vec2 asteroid_3_vertices[12] = {
+                    {  0.006423f, -0.327354f }, { -0.230594f, -0.457312f }, { -0.497797f, -0.197306f },
+                    { -0.345536f,  0.041065f }, { -0.497575f,  0.282259f }, { -0.230955f,  0.533400f },
+                    { -0.111968f,  0.396640f }, {  0.229570f,  0.525940f }, {  0.491186f,  0.142602f },
+                    {  0.253211f, -0.073727f }, {  0.502203f, -0.212973f }, {  0.255415f, -0.466600f }
+                };
+
+                const glm::vec2 asteroid_4_vertices[12] = {
+                    {  0.004242f,  0.128464f }, {  0.004242f,  0.479359f }, {  0.233801f,  0.479359f },
+                    {  0.494881f,  0.128464f }, {  0.494881f, -0.197267f }, {  0.233801f, -0.520641f },
+                    {  0.004242f, -0.520641f }, { -0.085344f, -0.520641f }, { -0.474404f, -0.169746f },
+                    { -0.269635f, -0.033223f }, { -0.505119f,  0.138784f }, { -0.269635f,  0.469039f }
+                };
+
+                const glm::vec2 space_ship_vertices[4] = {
+                    {-0.50f,  0.50f },
+                    { 0.00f, -0.50f },
+                    { 0.50f,  0.50f },
+                    { 0.00f,  0.25f }
                 };
 
                 GLuint vertexbuffer;
                 glGenBuffers(1, &vertexbuffer);
                 glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
                 glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+                GLuint vertexBuffers[5];
+                glGenBuffers(5, vertexBuffers);
+
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[0]);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_1_vertices), asteroid_1_vertices, GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[1]);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_2_vertices), asteroid_2_vertices, GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[2]);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_3_vertices), asteroid_3_vertices, GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[3]);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(asteroid_4_vertices), asteroid_4_vertices, GL_STATIC_DRAW);
+                glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[4]);
+                glBufferData(GL_ARRAY_BUFFER, sizeof(space_ship_vertices), space_ship_vertices, GL_STATIC_DRAW);
 
                 glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
 
@@ -113,9 +166,9 @@ int main(int argc, char* argv[])
                     // Render scene:
                     glClear(GL_COLOR_BUFFER_BIT);
                     glEnableVertexAttribArray(0);
-                    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+                    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffers[1]);
                     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-                    glDrawArrays(GL_TRIANGLES, 0, 3);
+                    glDrawArrays(GL_LINE_LOOP, 0, 12);
                     glDisableVertexAttribArray(0);
 
                     // Display the scene:
