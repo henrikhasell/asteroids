@@ -11,14 +11,52 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_opengl.h>
 
+#include <cmath>
+
 #include "utilities/shader.hpp"
 #include "utilities/program.hpp"
+#include "asteroid.hpp"
 #include "graphics.hpp"
 #include "model.hpp"
 
 #define PROJECT_NAME "Asteroids"
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define TIME_STEP 20
+
+float getRandomRadian()
+{
+    return (float)(rand() % 628318) / 100000.0f;
+}
+
+Asteroid createAsteroid(Model &model)
+{
+    constexpr float speed = Asteroid::speed;
+    constexpr float padding = 100.0f;
+
+    float direction = getRandomRadian();
+
+    glm::vec2 velocity = {
+        +sinf(direction) * speed,
+        -cosf(direction) * speed
+    };
+
+    float x;
+    float y;
+
+    if(rand() % 2)
+    {
+        x = -padding;
+        y = (float)(rand() % SCREEN_HEIGHT);
+    }
+    else
+    {
+        x = (float)(rand() % SCREEN_WIDTH);
+        y = -padding;
+    }
+
+    return Asteroid(model, glm::vec2(x, y), velocity, getRandomRadian(), 100.0f);
+}
 
 int main(int argc, char* argv[])
 {
@@ -60,6 +98,8 @@ int main(int argc, char* argv[])
                     if(graphics.link("shaders/vertex.glsl", "shaders/fragment.glsl") == true)
                     {
                         bool finished = false;
+
+                        Uint32 lastTimeStamp = SDL_GetTicks();
 
                         const glm::vec2 asteroid_1_vertices[10] = {
                             { -0.258829f, -0.466654f }, { -0.026869f, -0.217373f },
@@ -105,6 +145,12 @@ int main(int argc, char* argv[])
                             {space_ship_vertices, 4}
                         };
 
+                        std::vector<Asteroid> asteroidArray;
+
+                        for(int i = 0; i < 10; i++)
+                        {
+                            asteroidArray.push_back(createAsteroid(modelArray[rand() % 4]));
+                        }
                         while(!finished)
                         {
                             SDL_Event event;
@@ -114,6 +160,7 @@ int main(int argc, char* argv[])
                                 if(event.type == SDL_QUIT)
                                 {
                                     finished = true;
+                                    break;
                                 }
                                 else
                                 {
@@ -127,9 +174,26 @@ int main(int argc, char* argv[])
                                 finished = true;
                             }
 
+                            Uint32 time = SDL_GetTicks();
+
+                            // Messy time steps:
+
+                            for(Uint32 elapsed = time - lastTimeStamp; elapsed >= TIME_STEP; lastTimeStamp += TIME_STEP, elapsed -= TIME_STEP)
+                            {
+                                for(Asteroid &asteroid : asteroidArray)
+                                {
+                                    asteroid.move();
+                                }
+                            }
+
+                            // Render scene:
+
                             glClear(GL_COLOR_BUFFER_BIT);
 
-                            graphics.draw(modelArray[0], glm::vec2(400.0f, 400.0f), 100.0f, 0.0f);
+                            for(Asteroid &asteroid : asteroidArray)
+                            {
+                                asteroid.draw(graphics);
+                            }
 
                             SDL_GL_SwapWindow(window);
                         }

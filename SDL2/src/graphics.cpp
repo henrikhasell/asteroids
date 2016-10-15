@@ -82,7 +82,7 @@ void Graphics::draw(Model &model, const glm::vec2 &position, float scale, float 
     glm::mat4x4 modelMatrix;
 
     modelMatrix = glm::translate(modelMatrix, glm::vec3(position, 0.0f));
-    // modelMatrix = glm::rotate(modelMatrix, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
+    modelMatrix = glm::rotate(modelMatrix, rotation, glm::vec3(0.0f, 0.0f, 1.0f));
     modelMatrix = glm::scale(modelMatrix, glm::vec3(scale, scale, 1.0f));
 
     glUniformMatrix4fv(modelUniform, 1, GL_FALSE, &modelMatrix[0][0]);

@@ -38,14 +38,15 @@
 			<Add library="GLEW" />
 			<Add library="GL" />
 		</Linker>
+		<Unit filename="include/asteroid.hpp" />
 		<Unit filename="include/core/maths/Vector.hpp" />
 		<Unit filename="include/graphics.hpp" />
 		<Unit filename="include/model.hpp" />
-		<Unit filename="include/object.hpp" />
 		<Unit filename="include/utilities/program.hpp" />
 		<Unit filename="include/utilities/shader.hpp" />
 		<Unit filename="shaders/fragment.glsl" />
 		<Unit filename="shaders/vertex.glsl" />
+		<Unit filename="src/asteroid.cpp" />
 		<Unit filename="src/core/maths/Vector.cpp" />
 		<Unit filename="src/graphics.cpp" />
 		<Unit filename="src/main.cpp" />
