@@ -174,11 +174,9 @@ int main(int argc, char* argv[])
                                 finished = true;
                             }
 
-                            Uint32 time = SDL_GetTicks();
+                            // Time steps:
 
-                            // Messy time steps:
-
-                            for(Uint32 elapsed = time - lastTimeStamp; elapsed >= TIME_STEP; lastTimeStamp += TIME_STEP, elapsed -= TIME_STEP)
+                            for(Uint32 time = SDL_GetTicks(); time - lastTimeStamp >= TIME_STEP; lastTimeStamp += TIME_STEP)
                             {
                                 for(Asteroid &asteroid : asteroidArray)
                                 {
