@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +23,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -42,6 +44,7 @@
 		<Unit filename="include/core/maths/Vector.hpp" />
 		<Unit filename="include/graphics.hpp" />
 		<Unit filename="include/model.hpp" />
+		<Unit filename="include/spaceship.hpp" />
 		<Unit filename="include/utilities/program.hpp" />
 		<Unit filename="include/utilities/shader.hpp" />
 		<Unit filename="shaders/fragment.glsl" />
@@ -51,6 +54,7 @@
 		<Unit filename="src/graphics.cpp" />
 		<Unit filename="src/main.cpp" />
 		<Unit filename="src/model.cpp" />
+		<Unit filename="src/spaceship.cpp" />
 		<Unit filename="src/utilities/program.cpp" />
 		<Unit filename="src/utilities/shader.cpp" />
 		<Extensions>

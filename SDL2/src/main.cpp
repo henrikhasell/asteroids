@@ -17,6 +17,7 @@
 #include "utilities/program.hpp"
 #include "asteroid.hpp"
 #include "graphics.hpp"
+#include "spaceship.hpp"
 #include "model.hpp"
 
 #define PROJECT_NAME "Asteroids"
@@ -101,6 +102,8 @@ int main(int argc, char* argv[])
 
                         Uint32 lastTimeStamp = SDL_GetTicks();
 
+                        const Uint8 *keyboardState = SDL_GetKeyboardState(nullptr);
+
                         const glm::vec2 asteroid_1_vertices[10] = {
                             { -0.258829f, -0.466654f }, { -0.026869f, -0.217373f },
                             {  0.229284f, -0.486908f }, {  0.473549f, -0.231049f },
@@ -151,6 +154,9 @@ int main(int argc, char* argv[])
                         {
                             asteroidArray.push_back(createAsteroid(modelArray[rand() % 4]));
                         }
+
+                        SpaceShip spaceShip(modelArray[4], glm::vec2(400.0f, 300.0f), 0.0f, 20.0f);
+
                         while(!finished)
                         {
                             SDL_Event event;
@@ -182,6 +188,7 @@ int main(int argc, char* argv[])
                                 {
                                     asteroid.move();
                                 }
+                                spaceShip.update(keyboardState);
                             }
 
                             // Render scene:
@@ -192,6 +199,8 @@ int main(int argc, char* argv[])
                             {
                                 asteroid.draw(graphics);
                             }
+
+                            spaceShip.draw(graphics);
 
                             SDL_GL_SwapWindow(window);
                         }
