@@ -8,9 +8,13 @@
 class Model
 {
 public:
-    Model(const glm::vec2 vertices[], GLsizei length);
-    void draw();
+    Model(GLenum mode, GLenum usage);
+    void setVertices(const glm::vec2 vertices[], GLsizei length);
+    void draw() const;
 private:
+    const GLenum mode;
+    const GLenum usage;
+
     GLuint vertexBuffer;
     GLsizei length;
 };

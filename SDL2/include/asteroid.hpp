@@ -11,11 +11,11 @@
 class Asteroid
 {
 public:
-    static constexpr float angularVelocity = 0.01f;
-    static constexpr float speed = 2.0f;
+    static constexpr float rotationSpeed = 0.01f;
+    static constexpr float movementSpeed = 2.0f;
 
     Asteroid(
-        Model &model,
+        const Model &model,
         const glm::vec2 &position,
         const glm::vec2 &velocity,
         float rotation,
@@ -24,7 +24,7 @@ public:
     void draw(Graphics &graphics);
     void move();
 private:
-    Model &model;
+    const Model &model;
     glm::vec2 position;
     glm::vec2 velocity;
     float rotation;

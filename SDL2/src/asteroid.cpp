@@ -1,6 +1,6 @@
 #include "asteroid.hpp"
 
-Asteroid::Asteroid(Model &model, const glm::vec2 &position, const glm::vec2 &velocity, float rotation, float scale) :
+Asteroid::Asteroid(const Model &model, const glm::vec2 &position, const glm::vec2 &velocity, float rotation, float scale) :
     model(model),
     position(position),
     velocity(velocity),
@@ -32,5 +32,5 @@ void Asteroid::move()
     if(position.y > max_y) position.y -= max_y + padding;
     if(position.y < min_y) position.y += max_y + padding;
 
-    rotation += angularVelocity;
+    rotation += rotationSpeed;
 }

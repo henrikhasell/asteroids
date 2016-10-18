@@ -32,7 +32,7 @@ float getRandomRadian()
 
 Asteroid createAsteroid(Model &model)
 {
-    constexpr float speed = Asteroid::speed;
+    constexpr float speed = Asteroid::movementSpeed;
     constexpr float padding = 100.0f;
 
     float direction = getRandomRadian();
@@ -141,14 +141,21 @@ int main(int argc, char* argv[])
                         };
 
                         Model modelArray[] = {
-                            {asteroid_1_vertices, 10},
-                            {asteroid_2_vertices, 12},
-                            {asteroid_3_vertices, 12},
-                            {asteroid_4_vertices, 12},
-                            {space_ship_vertices, 4}
+                            {GL_LINE_LOOP, GL_STATIC_DRAW},
+                            {GL_LINE_LOOP, GL_STATIC_DRAW},
+                            {GL_LINE_LOOP, GL_STATIC_DRAW},
+                            {GL_LINE_LOOP, GL_STATIC_DRAW},
+                            {GL_LINE_LOOP, GL_STATIC_DRAW}
                         };
 
+                        modelArray[0].setVertices(asteroid_1_vertices, 10);
+                        modelArray[1].setVertices(asteroid_2_vertices, 12);
+                        modelArray[2].setVertices(asteroid_3_vertices, 12);
+                        modelArray[3].setVertices(asteroid_4_vertices, 12);
+                        modelArray[4].setVertices(space_ship_vertices, 4);
+
                         std::vector<Asteroid> asteroidArray;
+                        std::vector<Bullet> bulletArray;
 
                         for(int i = 0; i < 10; i++)
                         {
@@ -188,6 +195,12 @@ int main(int argc, char* argv[])
                                 {
                                     asteroid.move();
                                 }
+
+                                if(keyboardState[SDL_SCANCODE_SPACE])
+                                {
+                                    spaceShip.fireBullet(bulletArray);
+                                }
+
                                 spaceShip.update(keyboardState);
                             }
 

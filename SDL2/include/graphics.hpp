@@ -10,7 +10,7 @@ public:
     Graphics();
     ~Graphics();
     bool link(const char vertex[], const char fragment[]);
-    void draw(Model &model, const glm::vec2 &position, float scale, float rotation);
+    void draw(const Model &model, const glm::vec2 &position, float scale, float rotation);
 protected:
     GLuint vertexShader;
     GLuint fragmentShader;

@@ -77,7 +77,7 @@ bool Graphics::link(const char vertex[], const char fragment[])
     return false;
 }
 
-void Graphics::draw(Model &model, const glm::vec2 &position, float scale, float rotation)
+void Graphics::draw(const Model &model, const glm::vec2 &position, float scale, float rotation)
 {
     glm::mat4x4 modelMatrix;
 
